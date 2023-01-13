@@ -1,34 +1,9 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useContext } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
-
-// on input we donot validate, we only update the value
-// on blur we donot reset the value, we validate
-// then the form validation is only checked on blur...
-
-// const emailReducer = (state, action) => {
-//   switch (action.type) {
-//     case "USER_INPUT":
-//       return { value: action.value, isValid: null };
-//     case "INPUT_BLUR":
-//       return { value: state.value, isValid: state.value.includes("@") };
-//     default:
-//       return { value: "", isValid: false };
-//   }
-// };
-
-// const passwordReducer = (state, action) => {
-//   switch (action.type) {
-//     case "USER_INPUT":
-//       return { value: action.value, isValid: null };
-//     case "INPUT_BLUR":
-//       return { value: state.value, isValid: state.value.trim().length > 6 };
-//     default:
-//       return { value: "", isValid: null };
-//   }
-// };
+import AuthContext from "../../store/auth-context";
 
 const formReducer = (state, action) => {
   const stateCopy = { ...state };
@@ -59,6 +34,8 @@ const formReducer = (state, action) => {
 };
 
 const Login = (props) => {
+  const authCtx = useContext(AuthContext);
+
   const [formState, dispatchForm] = useReducer(formReducer, {
     email: "",
     emailIsValid: null,
@@ -85,7 +62,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(formState.email, formState.password);
+    authCtx.onLogin(formState.email, formState.password);
   };
 
   return (
