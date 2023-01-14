@@ -1,7 +1,7 @@
 import { useCallback, useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import ThemeContext from "../../store/theme-context";
-import { ThemePicker } from "../UI/ThemePicker/ThemePicker";
+import { DropDownList } from "../UI/DropDownList/DropDownList";
 
 const Settings = () => {
   const authCtx = useContext(AuthContext);
@@ -17,7 +17,7 @@ const Settings = () => {
 
   return (
     authCtx.isLoggedIn && (
-      <ThemePicker themes={themesAvailable} onChange={handleChange} />
+      <DropDownList items={themesAvailable} onChange={handleChange} />
     )
   );
 };
