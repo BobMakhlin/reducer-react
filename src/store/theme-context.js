@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 const THEMES = ["dark", "light"];
 const DEFAULT_THEME = "dark";
+const LOCAL_STORAGE_KEY = "theme";
 
 const ThemeContext = React.createContext({
   themesAvailable: THEMES,
@@ -14,7 +15,13 @@ const ThemeContext = React.createContext({
 export const ThemeContextProvider = (props) => {
   const [theme, setTheme] = useState(DEFAULT_THEME);
 
-  console.log("Theme provider is being redrawn. Theme:", theme);
+  useEffect(() => {
+    const theme = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+    if (theme) {
+      setTheme(theme);
+    }
+  }, []);
 
   const changeTheme = useCallback((value) => {
     if (!THEMES.includes(value)) {
@@ -22,6 +29,7 @@ export const ThemeContextProvider = (props) => {
     }
 
     setTheme(value);
+    localStorage.setItem(LOCAL_STORAGE_KEY, value);
   }, []);
 
   return (

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
 export const DropDownList = (props) => {
-  const { onChange, items } = props;
+  const { onChange, items, selectedItem } = props;
 
   const handleChange = useCallback(
     (event) => {
@@ -11,7 +11,7 @@ export const DropDownList = (props) => {
   );
 
   return (
-    <select onChange={handleChange}>
+    <select value={selectedItem} onChange={handleChange}>
       {items.map((item) => (
         <option key={item} value={item}>
           {item}

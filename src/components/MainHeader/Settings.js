@@ -6,7 +6,7 @@ import { DropDownList } from "../UI/DropDownList/DropDownList";
 const Settings = () => {
   const authCtx = useContext(AuthContext);
   const themeCtx = useContext(ThemeContext);
-  const { themesAvailable, changeTheme } = themeCtx;
+  const { themesAvailable, theme, changeTheme } = themeCtx;
 
   const handleChange = useCallback(
     (value) => {
@@ -17,7 +17,7 @@ const Settings = () => {
 
   return (
     authCtx.isLoggedIn && (
-      <DropDownList items={themesAvailable} onChange={handleChange} />
+      <DropDownList items={themesAvailable} selectedItem={theme} onChange={handleChange} />
     )
   );
 };
