@@ -1,9 +1,19 @@
-import { useCallback } from "react";
+import React, { useRef, useImperativeHandle, useCallback } from "react";
 import classes from "./Input.module.css";
 
-const Input = ({ isValid, id, type, label, value, onChange, onBlur }) => {
-  const handleChange = useCallback((event) => onChange(event), [onChange]);
-  const handleBlur = useCallback((event) => onBlur(event), [onBlur]);
+const Input = React.forwardRef((props, ref) => {
+  const { isValid, id, type, label, value, onChange, onBlur } = props;
+  const inputRef = useRef();
+
+  const focus = useCallback(() => {
+    inputRef.current.focus();
+  }, [inputRef]);
+
+  useImperativeHandle(ref, () => {
+    return {
+      focus,
+    };
+  });
 
   return (
     <div
@@ -16,11 +26,12 @@ const Input = ({ isValid, id, type, label, value, onChange, onBlur }) => {
         type={type}
         id={id}
         value={value}
-        onChange={handleChange}
-        onBlur={handleBlur}
+        onChange={onChange}
+        onBlur={onBlur}
+        ref={inputRef}
       />
     </div>
   );
-};
+});
 
 export default Input;
