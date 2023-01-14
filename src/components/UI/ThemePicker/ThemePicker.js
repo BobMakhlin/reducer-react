@@ -1,8 +1,7 @@
-import { useCallback, useContext } from "react";
-import styles from "./ThemePicker.module.css";
+import { useCallback } from 'react';
 
 export const ThemePicker = (props) => {
-  const { onChange } = props;
+  const { onChange, themes } = props;
 
   const handleChange = useCallback(
     (event) => {
@@ -13,8 +12,7 @@ export const ThemePicker = (props) => {
 
   return (
     <select onChange={handleChange}>
-      <option value="dark">Dark</option>
-      <option value="light">Light</option>
+      {themes.map(theme => <option key={theme} value={theme}>{theme}</option>)}
     </select>
   );
 };
